@@ -21,6 +21,7 @@ class Event(models.Model):
     ]
 
     event = models.CharField(max_length=200)
+    detail = models.CharField(max_length=1000)
     date = models.DateTimeField(default=timezone.now)
     priority = models.CharField(max_length=1, choices=priority_list)
     tags = models.ManyToManyField(Tag, related_name='tags', blank=True)
