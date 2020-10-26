@@ -15,3 +15,7 @@ class EventAdmin(admin.ModelAdmin):
     list_filter = ('date', 'priority',)
     list_editable = ('priority',)
     search_fields = ('event', 'date',)
+
+
+admin.site.register(models.Comment)
+admin.site.register(models.Tag)

@@ -59,7 +59,7 @@ class CommentViewSet(viewsets.ModelViewSet):
     queryset = Comment.objects.all()
     serializer_class = CommentSerializer
     filter_backends = [filters.SearchFilter]
-    search_fields = ['text']
+    search_fields = ['event__id']
 
 
 class TagViewSet(viewsets.ModelViewSet):
