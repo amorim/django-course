@@ -12,5 +12,6 @@ router.register('tags', viewset=views.TagViewSet)
 
 urlpatterns = [
     path('api/v1/', include(router.urls)),
+    path('api/v1/user', views.UserView.as_view(), name='user_details'),
     path('api-auth-token', obtain_auth_token)
 ]

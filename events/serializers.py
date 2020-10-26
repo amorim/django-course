@@ -1,3 +1,5 @@
+from django.contrib.auth.models import User
+
 from rest_framework import serializers
 
 from events.models import Event, Comment, Tag
@@ -15,6 +17,7 @@ class NewCommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Comment
         fields = ('id',)
+
 
 class TagSerializer(serializers.ModelSerializer):
 
@@ -40,4 +43,9 @@ class NewEventSerializer(serializers.ModelSerializer):
         fields = ('id', 'event', 'detail', 'date', 'priority', 'tags')
 
 
+class UserDetailSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('username', 'email', 'first_name', 'last_name')
+        read_only_fields = ('email', )
 

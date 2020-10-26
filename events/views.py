@@ -1,13 +1,16 @@
 import datetime
 
+from django.contrib.auth.models import User
 from django.utils import timezone
 from rest_framework import viewsets, status, filters
 from rest_framework.decorators import action
-from rest_framework.permissions import IsAuthenticated, IsAdminUser
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
+from rest_framework.views import APIView
 
 from events.models import Event, Comment, Tag
-from events.serializers import EventSerializer, CommentSerializer, NewEventSerializer, TagSerializer
+from events.serializers import EventSerializer, CommentSerializer, NewEventSerializer, TagSerializer, \
+    UserDetailSerializer
 
 
 class EventViewSet(viewsets.ModelViewSet):
@@ -62,3 +65,17 @@ class CommentViewSet(viewsets.ModelViewSet):
 class TagViewSet(viewsets.ModelViewSet):
     queryset = Tag.objects.all()
     serializer_class = TagSerializer
+
+
+class UserView(APIView):
+    permission_classes = [IsAuthenticated, ]
+
+    def get(self, request):
+        if request.user:
+            try:
+                user = self.request.user
+            except User.DoesNotExist:
+                return Response(status=status.HTTP_401_UNAUTHORIZED)
+            serializer = UserDetailSerializer(user)
+            return Response(serializer.data)
+        return Response(status=status.HTTP_401_UNAUTHORIZED)
